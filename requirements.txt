@@ -1,8 +1,4 @@
 -r prod/requirements.txt
 
-flake8==3.9.2
 ipython==7.24.0
-flake8-isort==4.0.0
-gitlint==0.15.1
-coverage==4.5.4
-requests==2.25.1
+django-debug-toolbar==3.2.1
