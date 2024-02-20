@@ -1,4 +1,4 @@
 -r prod/requirements.txt
 
-ipython==7.24.0
+ipython==8.21.0
 pre-commit==3.3.0
