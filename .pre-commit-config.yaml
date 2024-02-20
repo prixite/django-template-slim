@@ -3,13 +3,9 @@ repos:
     rev: v4.0.1
     hooks:
       - id: check-yaml
-        exclude: '\.(csv|md|jsonl)$'
       - id: end-of-file-fixer
-        exclude: '\.(csv|md|jsonl)$'
       - id: trailing-whitespace
-        exclude: '\.(csv|md|jsonl)$'
       - id: requirements-txt-fixer
-        exclude: '\.(csv|md|jsonl)$'
   - repo: https://github.com/timothycrosley/isort
     rev: 5.12.0
     hooks:

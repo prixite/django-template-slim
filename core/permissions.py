@@ -16,10 +16,10 @@ class UserPermission(permissions.BasePermission):
         if request.user.is_staff:
             return True
 
-        post_allowed_actions = ['start_email_verification']
+        post_allowed_actions = ["start_email_verification"]
         action_allowed = view.action not in post_allowed_actions
 
-        if request.method == 'POST' and action_allowed:
+        if request.method == "POST" and action_allowed:
             return False
 
         return True
@@ -36,16 +36,18 @@ class IsAdminOrReadonly(permissions.BasePermission):
 class IsDefaultUser(permissions.BasePermission):
     def has_permission(self, request, view):
         return bool(
-            request.user and
-            request.user.is_authenticated and
-            request.user.email == SIGNUP_USER
+            request.user
+            and request.user.is_authenticated
+            and request.user.email == SIGNUP_USER
         )
 
 
 class IsNotDefaultUser(permissions.BasePermission):
     def has_permission(self, request, view):
-        if (request.user and
-                request.user.is_authenticated and
-                request.user.email == SIGNUP_USER):
+        if (
+            request.user
+            and request.user.is_authenticated
+            and request.user.email == SIGNUP_USER
+        ):
             return False
         return True

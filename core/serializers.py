@@ -12,27 +12,27 @@ class UserAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'url',
-            'email',
-            'password',
-            'username',
-            'first_name',
-            'last_name',
+            "url",
+            "email",
+            "password",
+            "username",
+            "first_name",
+            "last_name",
         ]
-        read_only_fields = ['username']
+        read_only_fields = ["username"]
 
     def create(self, validated_data):
-        validated_data['username'] = validated_data['email']
-        validated_data['password'] = make_password(validated_data['password'])
+        validated_data["username"] = validated_data["email"]
+        validated_data["password"] = make_password(validated_data["password"])
         return super().create(validated_data)
 
     def update(self, user, validated_data):
-        if 'email' in validated_data:
-            validated_data['username'] = validated_data['email']
+        if "email" in validated_data:
+            validated_data["username"] = validated_data["email"]
 
-        if 'password' in validated_data:
-            password = make_password(validated_data['password'])
-            validated_data['password'] = password
+        if "password" in validated_data:
+            password = make_password(validated_data["password"])
+            validated_data["password"] = password
 
         return super().update(user, validated_data)
 
@@ -43,16 +43,16 @@ class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id',
-            'password',
-            'first_name',
-            'last_name',
-            'email',
+            "id",
+            "password",
+            "first_name",
+            "last_name",
+            "email",
         ]
 
     def create(self, validated_data):
-        validated_data['username'] = validated_data['email']
-        validated_data['password'] = make_password(validated_data['password'])
+        validated_data["username"] = validated_data["email"]
+        validated_data["password"] = make_password(validated_data["password"])
         with transaction.atomic():
             user = super().create(validated_data)
 
@@ -67,18 +67,18 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'url',
-            'email',
-            'password',
-            'first_name',
-            'last_name',
+            "url",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
         ]
-        read_only_fields = ['email']
+        read_only_fields = ["email"]
 
     def update(self, user, validated_data):
-        if 'password' in validated_data:
-            password = make_password(validated_data['password'])
-            validated_data['password'] = password
+        if "password" in validated_data:
+            password = make_password(validated_data["password"])
+            validated_data["password"] = password
 
         return super().update(user, validated_data)
 

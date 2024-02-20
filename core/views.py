@@ -28,8 +28,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(
         detail=True,
-        methods=['post'],
-        url_path=r'email/verification/',
+        methods=["post"],
+        url_path=r"email/verification/",
     )
     def start_email_verification(self, request, *args, **kwargs):
         user = self.get_object()
@@ -38,7 +38,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(
         detail=False,
-        methods=['post'],
+        methods=["post"],
         permission_classes=[SignupPermission],
     )
     def signup(self, request, *args, **kwargs):
@@ -46,13 +46,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(
         detail=True,
-        methods=['get'],
+        methods=["get"],
         permission_classes=[permissions.AllowAny],
-        url_path=r'email/verification/(?P<code>\w+)',
+        url_path=r"email/verification/(?P<code>\w+)",
     )
     def complete_email_verification(self, request, *args, **kwargs):
         user = self.get_object()
-        code = kwargs['code']
+        code = kwargs["code"]
         user.verify_email(code)
 
         headers = self.get_success_headers(kwargs)
@@ -63,7 +63,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(
         detail=True,
-        methods=['post'],
+        methods=["post"],
         permission_classes=[permissions.IsAdminUser],
     )
     def admin(self, request, *args, **kwargs):
@@ -78,9 +78,12 @@ class UserViewSet(viewsets.ModelViewSet):
         )
 
     def get_serializer_class(self):
-        if self.action == 'signup':
+        if self.action == "signup":
             return SignupSerializer
-        elif self.action in ['admin', 'start_email_verification']:  # pragma: no cover  # noqa
+        elif self.action in [
+            "admin",
+            "start_email_verification",
+        ]:  # pragma: no cover  # noqa
             # This block is for swagger documentation. It will not be used by
             # the code. Hence, the no-cover.
             return EmptySerializer
@@ -93,13 +96,13 @@ class UserViewSet(viewsets.ModelViewSet):
         user = self.request.user
         queryset = super().get_queryset()
 
-        if self.action == 'complete_email_verification':
+        if self.action == "complete_email_verification":
             return queryset
 
         if not user.is_staff:
             queryset = queryset.filter(id=user.id)
 
-        return queryset.order_by('-date_joined')
+        return queryset.order_by("-date_joined")
 
 
 class ObtainAuthToken(authtoken_views.ObtainAuthToken):
@@ -112,9 +115,11 @@ class CountryViewSet(viewsets.ViewSet):
     def list(self, request, *args, **kwargs):
         countries = []
         for code, name in sorted(COUNTRIES, key=lambda x: x[1]):
-            countries.append(dict(
-                code=code,
-                name=name,
-            ))
+            countries.append(
+                dict(
+                    code=code,
+                    name=name,
+                )
+            )
 
         return Response(countries)

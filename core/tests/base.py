@@ -8,26 +8,26 @@ from core.models import User
 
 class BaseTestCase(TestCase):
     def setUp(self):
-        self.admin = 'admin@example.com'
-        self.user = 'owner@example.com'
-        self.signup_user = 'signup@example.com'
+        self.admin = "admin@example.com"
+        self.user = "owner@example.com"
+        self.signup_user = "signup@example.com"
 
     def post_json(self, url, data=None):
         data = data or {}
         data = json.dumps(data)
-        app_json = 'application/json'
+        app_json = "application/json"
         return self.client.post(url, data, content_type=app_json)
 
     def put_json(self, url, data=None):
         data = data or {}
         data = json.dumps(data)
-        app_json = 'application/json'
+        app_json = "application/json"
         return self.client.put(url, data, content_type=app_json)
 
     def patch_json(self, url, data=None):
         data = data or {}
         data = json.dumps(data)
-        app_json = 'application/json'
+        app_json = "application/json"
         return self.client.patch(url, data, content_type=app_json)
 
     def login_admin(self):
@@ -47,7 +47,7 @@ class BaseTestCase(TestCase):
         return token.key
 
     def assertOK(self, response):
-        self.assertEqual(response.status_code//100, 2)
+        self.assertEqual(response.status_code // 100, 2)
 
     def assert401(self, response):
         self.assertEqual(response.status_code, 401)
