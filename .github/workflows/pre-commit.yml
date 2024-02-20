@@ -1,0 +1,33 @@
+name: Django Template
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run pre-commit
+        run: pre-commit run --all
+
+      - name: Check missing migrations
+        run: python manage.py makemigrations --check --dry-run
+        env:
+          SECRET_KEY: 'jx3asn4#jcdr*9j_gjp@n91zghu7s1eg_8_rp_2*0yk9tisezd'
