@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,13 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "pu%+0x3wq@#t=v!pr-zdqc=!v)qg&e15yf4yg$__5cd!(#w4b6"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ["ENV"] == "dev"
+DEBUG = True
 
 ALLOWED_HOSTS = []
-if not DEBUG:
-    ALLOWED_HOSTS = [
-        "localhost",
-    ]
 
 
 # Application definition
@@ -42,10 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar",
-    "rest_framework",
-    "rest_framework.authtoken",
-    "core",
+    "app",
 ]
 
 MIDDLEWARE = [
@@ -54,12 +46,11 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "app.urls"
+ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
     {
@@ -77,19 +68,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "app.wsgi.application"
+WSGI_APPLICATION = "project.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["POSTGRES_DB"],
-        "USER": os.environ["POSTGRES_USER"],
-        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
-        "HOST": os.environ["DB_HOST"],
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -134,3 +123,5 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 STATIC_ROOT = "/opt/code/static"
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
