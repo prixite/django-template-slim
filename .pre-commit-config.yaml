@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-yaml
+        exclude: '\.(csv|md|jsonl)$'
+      - id: end-of-file-fixer
+        exclude: '\.(csv|md|jsonl)$'
+      - id: trailing-whitespace
+        exclude: '\.(csv|md|jsonl)$'
+      - id: requirements-txt-fixer
+        exclude: '\.(csv|md|jsonl)$'
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ["--profile", "black"]
+  - repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+      - id: black
+        exclude: (.*migrations/.*|\.(csv|md|jsonl)$)
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        exclude: (.*migrations/.*|\.(csv|md|jsonl)$)
+        args:
+          - --max-line-length=88
