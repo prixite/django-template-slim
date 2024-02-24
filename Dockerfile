@@ -1,4 +1,4 @@
-FROM python:3-slim
+FROM python:3.12
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -11,11 +11,9 @@ RUN apt-get update && apt-get install -y \
     gcc \
     git
 
-RUN pip install pip==21.1.2
-
 WORKDIR /opt/code
 
-COPY prod/requirements.txt prod/requirements.txt
 COPY requirements.txt requirements.txt
+COPY requirements-dev.txt requirements-dev.txt
 
-RUN pip install -r requirements.txt
+RUN pip install -U pip && pip install -r requirements-dev.txt

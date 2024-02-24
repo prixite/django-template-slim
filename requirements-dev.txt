@@ -1,0 +1,4 @@
+-r ./requirements.txt
+
+ipython==7.24.0
+pre-commit==3.3.0

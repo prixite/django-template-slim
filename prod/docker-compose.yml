@@ -6,10 +6,10 @@ services:
     env_file:
       - .env
 
-  api:
+  sync-web:
     build:
-      context: ..
-      dockerfile: ./prod/Dockerfile
+      context: .
+      dockerfile: ./Dockerfile
     env_file:
       - .env
     volumes:
@@ -17,7 +17,20 @@ services:
       - shm:/dev/shm
     depends_on:
       - db
-    command: bash ./scripts/run-with-gunicorn.sh 2
+    command: bash ./scripts/run-with-gunicorn.sh
+
+  async-web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - static_volume:/opt/code/static
+      - shm:/dev/shm
+    depends_on:
+      - db
+    command: bash ./scripts/run-with-gunicorn.sh
 
   nginx:
     build: ./nginx
