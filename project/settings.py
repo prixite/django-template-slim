@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+import dj_database_url
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -86,6 +87,9 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+if DATABASE_URL := os.getenv("DATABASE_URL"):
+    DATABASES["default"] = dj_database_url.parse(DATABASE_URL)
 
 AUTH_USER_MODEL = "app.User"
 
