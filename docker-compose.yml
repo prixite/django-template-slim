@@ -28,4 +28,4 @@ services:
       - "8001:8001"
     depends_on:
       - db
-    command: uvicorn project.asgi:application --reload --port 8001
+    command: uvicorn project.asgi:application --reload --host 0.0.0.0 --port 8001
