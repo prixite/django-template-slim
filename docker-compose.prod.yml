@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
 
-  sync-web:
+  web:
     build:
       context: .
       dockerfile: ./prod/Dockerfile
@@ -19,7 +19,7 @@ services:
       - db
     command: bash ./prod/scripts/run-sync.sh
 
-  async-web:
+  aweb:
     build:
       context: .
       dockerfile: ./prod/Dockerfile
@@ -41,8 +41,8 @@ services:
       - static_volume:/opt/code/static
       - shm:/dev/shm
     depends_on:
-      - sync-web
-      - async-web
+      - web
+      - aweb
 
 volumes:
   static_volume:
