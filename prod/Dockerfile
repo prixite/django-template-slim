@@ -1,4 +1,4 @@
-FROM python:3-slim
+FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -10,12 +10,10 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc
 
-RUN pip install pip==21.1.2
-
 WORKDIR /opt/code
 
-COPY prod/requirements.txt prod/requirements.txt
+COPY requirements.txt requirements.txt
 
-RUN pip install -r prod/requirements.txt
+RUN pip install -U pip && pip install -r requirements.txt
 
 COPY . ./

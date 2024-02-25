@@ -2,14 +2,14 @@ version: '3.4'
 
 services:
   db:
-    image: postgres
+    image: postgres:16.2
     env_file:
       - .env
 
   sync-web:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./prod/Dockerfile
     env_file:
       - .env
     volumes:
@@ -17,12 +17,12 @@ services:
       - shm:/dev/shm
     depends_on:
       - db
-    command: bash ./scripts/run-with-gunicorn.sh
+    command: bash ./prod/scripts/run-sync.sh
 
   async-web:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./prod/Dockerfile
     env_file:
       - .env
     volumes:
@@ -30,7 +30,7 @@ services:
       - shm:/dev/shm
     depends_on:
       - db
-    command: bash ./scripts/run-with-gunicorn.sh
+    command: bash ./prod/scripts/run-async.sh
 
   nginx:
     build: ./nginx
@@ -41,7 +41,8 @@ services:
       - static_volume:/opt/code/static
       - shm:/dev/shm
     depends_on:
-      - api
+      - sync-web
+      - async-web
 
 volumes:
   static_volume:
