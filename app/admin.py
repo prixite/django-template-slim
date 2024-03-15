@@ -1,5 +1,12 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 
-from .models import User
+from .models import Person, User
 
-admin.site.register(User)
+
+class UserAdmin(DefaultUserAdmin):
+    pass
+
+
+admin.site.register(Person)
+admin.site.register(User, UserAdmin)

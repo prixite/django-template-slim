@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Prixite Sales Assistant</title>
+	</head>
+	<body>
+		{% if user.is_authenticated %}
+		<form method="post" action="{% url 'logout' %}">
+			{% csrf_token %}
+			<input type="submit" value="Logout">
+		</form>
+		{% endif %}
+
+		<h1>Welcome {{ user.username }}</h1>
+
+		{% if form.errors %}
+		<p>Your username and password didn't match. Please try again.</p>
+		{% endif %}
+
+		<form method="post">
+			{% csrf_token %}
+			<h2>Enter Upwork Job Description</h2>
+			<div>{{ form.requirements }}</div>
+			<p><input type="submit" value="Submit"></p>
+			<input type="hidden" name="next" value="{{ next }}">
+		</form>
+
+		<h2>Job Description</h2>
+		<hr />
+		<pre>{{ chat.requirements }}</pre>
+
+		<h2>Response</h2>
+		<hr />
+		<pre>{{ chat.ai_response }}</pre>
+
+	</body>
+</html>
