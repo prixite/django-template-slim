@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SECRET_KEY: "fake"
-      DEBUG: "False"
+      DEBUG: "True"
       ALLOWED_HOSTS: "localhost"
       CSRF_TRUSTED_ORIGINS: "http://localhost"
 
@@ -24,8 +24,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install Dependencies
-        run: |
-          pip install -r requirements-dev.txt
+        run: pip install -r requirements-dev.txt
 
       - name: Run pre-commit
         run: pre-commit run --all
