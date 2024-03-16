@@ -8,6 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: "fake"
+      DEBUG: "False"
+      ALLOWED_HOSTS: "localhost"
+      CSRF_TRUSTED_ORIGINS: "http://localhost"
 
     steps:
       - name: Checkout code
@@ -25,7 +30,8 @@ jobs:
       - name: Run pre-commit
         run: pre-commit run --all
 
+      - name: Check Django
+        run: ./manage.py check
+
       - name: Check missing migrations
         run: python manage.py makemigrations --check --dry-run
-        env:
-          SECRET_KEY: 'jx3asn4#jcdr*9j_gjp@n91zghu7s1eg_8_rp_2*0yk9tisezd'

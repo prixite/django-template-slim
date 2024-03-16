@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from app import forms, models
+from app import forms
 
 
 @login_required
@@ -17,8 +17,4 @@ def index(request):
         form = forms.PersonForm()
 
     context = {"form": form}
-
-    if chat_id := request.GET.get("id"):
-        context["chat"] = models.Person.objects.get(id=chat_id)
-
     return render(request, "app/index.html", context)
